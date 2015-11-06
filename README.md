@@ -1,11 +1,14 @@
-Hey people,
-since the last Spotify update to version 1.0.1.1060.gc75ebdfd they broke the support for the used applescript in their application. In the following link you can see how to change one file in the Spotify application to get partly the original functions back, only the album cover is still not supported in this new version.
+Greetings again,
 
-https://community.spotify.com/t5/Help-Desktop-Linux-Mac-and/Apple-scripting-broken-in-1-0-1-988-g8f17a348/td-p/1029434
+I have finally found the time to update the app!
 
-Another possibility is to go back to an older version of Spotify and turn off the autoupdate. There are advices in the Spotify forums how to do that.
+It know supports again the album covers but only if you have an Internet connection and the supplied data by Spotify is correct. In the case of local music, listening without Internet or the corrupted image data from Spotify I do hide the viewobject of the cover so that you have more space for other widgets.
 
-If you want a deeper instruction how to use one of both solutions you can create an issue in this project and I will answer you.
+I do now use autolayout ... so this looks a little bit nicer but I still use the ugly play/pause, forward and back buttons (yeah, I am too lazy to change that...).
+
+Some of you maybe had noticed that it's sometimes hard to read the complete title or name of the album. I made the text selectable and scrollable, so if you try to select the text from left to right you are able to read it complete. I would have liked to use tooltips but they are not supported in widgets. :-(
+
+I hope you enjoy it and as always if you have questions or bugs to mention, just write it in the issues.
 
 Spotify4Me
 ==========
@@ -20,7 +23,4 @@ Download the project, copy the "SpotifyMain.app" to your Applications folder and
 
 If you have already installed one version restart the Mac, replace the old SpofityMain.app with the new one and start it.
 
-Update:
-- removed refresh button
-- widget listens now to playstate of spotify, no manual refresh needed anymore
-- if Spofity is closed or stopped (not paused) the widget will disappear and leaves the space for other widgets to take
+

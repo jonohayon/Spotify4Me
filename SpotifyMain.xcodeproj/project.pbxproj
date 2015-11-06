@@ -18,7 +18,7 @@
 		F59E97891A05C5AE00F7BFAB /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59E97881A05C5AE00F7BFAB /* TodayViewController.swift */; };
 		F59E978B1A05C5AE00F7BFAB /* TodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F59E978A1A05C5AE00F7BFAB /* TodayViewController.xib */; };
 		F59E978E1A05C5AE00F7BFAB /* SpotifyMain4Me.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F59E977D1A05C5AE00F7BFAB /* SpotifyMain4Me.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F59E97961A05D4B500F7BFAB /* DataSupporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59E97951A05D4B500F7BFAB /* DataSupporter.swift */; };
+		F59E97961A05D4B500F7BFAB /* Api2Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59E97951A05D4B500F7BFAB /* Api2Spotify.swift */; };
 		F5AA16F61A10E83A00E1943A /* back.ico in Resources */ = {isa = PBXBuildFile; fileRef = F5AA16F11A10E83900E1943A /* back.ico */; };
 		F5AA16F71A10E83A00E1943A /* forward.ico in Resources */ = {isa = PBXBuildFile; fileRef = F5AA16F21A10E83900E1943A /* forward.ico */; };
 		F5AA16F81A10E83A00E1943A /* pause.ico in Resources */ = {isa = PBXBuildFile; fileRef = F5AA16F31A10E83900E1943A /* pause.ico */; };
@@ -74,7 +74,7 @@
 		F59E97861A05C5AE00F7BFAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F59E97881A05C5AE00F7BFAB /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		F59E978A1A05C5AE00F7BFAB /* TodayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodayViewController.xib; sourceTree = "<group>"; };
-		F59E97951A05D4B500F7BFAB /* DataSupporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSupporter.swift; sourceTree = "<group>"; };
+		F59E97951A05D4B500F7BFAB /* Api2Spotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api2Spotify.swift; sourceTree = "<group>"; };
 		F59E97971A065D0A00F7BFAB /* SpotifyMain.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpotifyMain.entitlements; sourceTree = "<group>"; };
 		F5AA16F11A10E83900E1943A /* back.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = back.ico; sourceTree = "<group>"; };
 		F5AA16F21A10E83900E1943A /* forward.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = forward.ico; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 				F59E97601A05C51100F7BFAB /* Images.xcassets */,
 				F59E97621A05C51100F7BFAB /* Main.storyboard */,
 				F59E975A1A05C51100F7BFAB /* Supporting Files */,
-				F59E97951A05D4B500F7BFAB /* DataSupporter.swift */,
+				F59E97951A05D4B500F7BFAB /* Api2Spotify.swift */,
 				F576A6921A0AB612008ED193 /* DataManager.swift */,
 			);
 			path = Spotify;
@@ -264,7 +264,9 @@
 		F59E974F1A05C51000F7BFAB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Lucas Backert";
 				TargetAttributes = {
 					F59E97561A05C51100F7BFAB = {
@@ -352,7 +354,7 @@
 				F59E975F1A05C51100F7BFAB /* ViewController.swift in Sources */,
 				F576A6931A0AB612008ED193 /* DataManager.swift in Sources */,
 				F59E975D1A05C51100F7BFAB /* AppDelegate.swift in Sources */,
-				F59E97961A05D4B500F7BFAB /* DataSupporter.swift in Sources */,
+				F59E97961A05D4B500F7BFAB /* Api2Spotify.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +429,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -493,6 +496,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Spotify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "backert.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SpotifyMain;
 			};
 			name = Debug;
@@ -506,6 +510,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Spotify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "backert.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SpotifyMain;
 			};
 			name = Release;
@@ -525,6 +530,7 @@
 				);
 				INFOPLIST_FILE = SpotifyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "backert.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SpotifyMainTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spotify.app/Contents/MacOS/Spotify";
 			};
@@ -541,6 +547,7 @@
 				);
 				INFOPLIST_FILE = SpotifyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "backert.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SpotifyMainTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spotify.app/Contents/MacOS/Spotify";
 			};
@@ -558,6 +565,7 @@
 				);
 				INFOPLIST_FILE = Spotify4Me/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "backert.SpotifyMain.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SpotifyMain4Me;
 				SKIP_INSTALL = YES;
 			};
@@ -571,6 +579,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Spotify4Me/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "backert.SpotifyMain.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SpotifyMain4Me;
 				SKIP_INSTALL = YES;
 			};

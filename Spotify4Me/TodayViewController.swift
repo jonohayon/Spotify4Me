@@ -36,6 +36,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     @IBOutlet weak var volumeSlider: NSSlider!
     @IBOutlet weak var playpauseButton: NSButton!
     
+    @IBOutlet weak var CoverHight: NSLayoutConstraint!
     @IBAction func volumeSliderAction(sender: AnyObject) {
         let notify = NSNotification(name: "Spotify4Me", object: "volume\(sender.integerValue)")
         centerReceiver.postNotification(notify)
@@ -53,15 +54,16 @@ class TodayViewController: NSViewController, NCWidgetProviding {
         centerReceiver.postNotification(notify)
     }
     
-    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)!) {
+    override func viewWillAppear() {
         if initialize {
+            initialize = false
             setReceiver()
             let notify = NSNotification(name: "Spotify4Me", object: "update")
-            var mainapp: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("backert.SpotifyMain") as [NSRunningApplication]
+            let mainapp: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("backert.SpotifyMain") as [NSRunningApplication]
             if mainapp.isEmpty {
                 titleOutput.stringValue = "Please start 'SpotifyMain' application"
             }else {
-                var app: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("com.spotify.client") as [NSRunningApplication]
+                let app: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("com.spotify.client") as [NSRunningApplication]
                 if app.isEmpty {
                     controller.setHasContent(false, forWidgetWithBundleIdentifier: "backert.SpotifyMain.SpotifyMain4Me")
                 }else{
@@ -69,24 +71,22 @@ class TodayViewController: NSViewController, NCWidgetProviding {
                 }
             }
         }
-        completionHandler(.NewData)
     }
 
     func setReceiver(){
-        initialize = false
-        let homeAppObserver = self.centerReceiver.addObserverForName("Spotify4Me", object: nil, queue: nil) { (note) -> Void in
-            let cmd = note.object as String
+        self.centerReceiver.addObserverForName("Spotify4Me", object: nil, queue: nil) { (note) -> Void in
+            let cmd = note.object as! String
             if cmd == "finished" {
                 self.information = self.defaults.persistentDomainForName("backert.apps")!
                 self.refreshView()
             }
         }
-        let spotifyObserver = self.centerReceiver.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (note) -> Void in
+        self.centerReceiver.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (note) -> Void in
             let info = note.userInfo!
-            let state = info["Player State"]! as String
+            let state = info["Player State"]! as! String
             let notify = NSNotification(name: "Spotify4Me", object: "update")
             
-            var mainapp: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("backert.SpotifyMain") as [NSRunningApplication]
+            let mainapp: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("backert.SpotifyMain") as [NSRunningApplication]
             if mainapp.isEmpty {
                 self.titleOutput.stringValue = "Please start 'SpotifyMain' application"
             }else {
@@ -98,14 +98,25 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     }
     
     func refreshView(){
-        titleOutput.stringValue = information[smTitle] as String
-        albumOutput.stringValue = information[smAlbum] as String
-        artistOutput.stringValue = information[smArtist] as String
-        let vol: String = information[smVolume] as String
-        volumeSlider.integerValue = vol.toInt()!
-        let coverAsData = information[smCover] as NSData
-        coverOutput.image = NSImage(data: coverAsData)
-        let state = information[smState] as String
+        titleOutput.stringValue = information[smTitle] as! String
+        albumOutput.stringValue = information[smAlbum] as! String
+        artistOutput.stringValue = information[smArtist] as! String
+        
+        let vol: String = information[smVolume] as! String
+        volumeSlider.integerValue = Int(vol)!
+        
+        let coverAsData = information[smCover] as! NSData
+        let imageobj = NSImage.init(data: coverAsData)
+        
+        if( !coverAsData.isEqualToData(NSData()) && imageobj != nil ){
+            CoverHight.constant = CGFloat(64)
+            coverOutput.image = imageobj
+        }else{
+            CoverHight.constant = CGFloat(0)
+        }
+    
+        let state = information[smState] as! String
+        
         if state == "kPSP" {
             playpauseButton.image = pauseImage
         }else if state == "kPSp" {

@@ -22,10 +22,9 @@ class DataManager {
     var centerReceiver = NSDistributedNotificationCenter()
     var information: [String:AnyObject] = [:]
     init(){
-        var observer = centerReceiver.addObserverForName("Spotify4Me", object: nil, queue: nil) { (note) -> Void in
-            println( "received in app \(note.object as String)")
+        centerReceiver.addObserverForName("Spotify4Me", object: nil, queue: nil) { (note) -> Void in
             var defaultcase = false
-            let cmd = note.object as String
+            let cmd = note.object as! String
             switch cmd {
             case "update":
                 self.update()
@@ -41,7 +40,7 @@ class DataManager {
             case let volumestring :
                 if let range = volumestring.rangeOfString("volume") {
                     let stringVol:String = volumestring.substringFromIndex(range.endIndex)
-                    self.volume(stringVol.toInt()!)
+                    self.volume(Int(stringVol)!)
                 }
             }
             if !defaultcase {
@@ -50,50 +49,46 @@ class DataManager {
             }
         }
         
-        let spotifyObserver = self.centerReceiver.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (note) -> Void in
+        self.centerReceiver.addObserverForName("com.spotify.client.PlaybackStateChanged", object: nil, queue: nil) { (note) -> Void in
             let info = note.userInfo!
-            let state = info["Player State"]! as String
-            
-            let notify = NSNotification(name: "Spotify4Me", object: "update")
-            var mainapp: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("backert.SpotifyMain") as [NSRunningApplication]
-            
-            var controller = NCWidgetController.widgetController()
+            let state = info["Player State"]! as! String
+            let controller = NCWidgetController.widgetController()
             
             if state == "Stopped" {
                 controller.setHasContent(false, forWidgetWithBundleIdentifier: "backert.SpotifyMain.SpotifyMain4Me")
             }else{
                 controller.setHasContent(true, forWidgetWithBundleIdentifier: "backert.SpotifyMain.SpotifyMain4Me")
             }
-            
+            self.update()
         }
     }
     func update(){
-        let state = SpotifyApi.getState()
+        let state = Api2Spotify.getState()
         information.updateValue(state, forKey: smState)
         if state != "kPSS" {
-            information.updateValue(SpotifyApi.getTitle(), forKey: smTitle)
-            information.updateValue(SpotifyApi.getAlbum(), forKey: smAlbum)
-            information.updateValue(SpotifyApi.getArtist(), forKey: smArtist)
-            information.updateValue(SpotifyApi.getCover(), forKey: smCover)
-            information.updateValue(SpotifyApi.getVolume(), forKey: smVolume)
+            information.updateValue(Api2Spotify.getTitle(), forKey: smTitle)
+            information.updateValue(Api2Spotify.getAlbum(), forKey: smAlbum)
+            information.updateValue(Api2Spotify.getArtist(), forKey: smArtist)
+            information.updateValue(Api2Spotify.getCover(), forKey: smCover)
+            information.updateValue(Api2Spotify.getVolume(), forKey: smVolume)
         }
         defaults.setPersistentDomain(information, forName: "backert.apps")
         defaults.synchronize()
     }
     func playpause(){
-        SpotifyApi.toPlayPause()
+        Api2Spotify.toPlayPause()
         update()
     }
     func skip(){
-        SpotifyApi.toNextTrack()
+        Api2Spotify.toNextTrack()
         update()
     }
     func back(){
-        SpotifyApi.toPreviousTrack()
+        Api2Spotify.toPreviousTrack()
         update()
     }
     func volume(level: Int){
-        SpotifyApi.setVolume(level)
+        Api2Spotify.setVolume(level)
         update()
     }
 }
