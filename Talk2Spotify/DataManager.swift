@@ -1,6 +1,6 @@
 //
 //  DataManager.swift
-//  SpotifyMain
+//  Talk2Spotify4Me
 //
 //  Created by Lucas Backert on 05.11.14.
 //  Copyright (c) 2014 Lucas Backert. All rights reserved.

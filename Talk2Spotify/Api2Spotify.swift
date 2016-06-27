@@ -1,6 +1,6 @@
 //
 //  Api2Spotify.swift
-//  Spotify
+//  Talk2Spotify4Me
 //
 //  Created by Lucas Backert on 02.11.14.
 //  Copyright (c) 2014 Lucas Backert. All rights reserved.

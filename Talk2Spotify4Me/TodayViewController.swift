@@ -1,6 +1,6 @@
 //
 //  TodayViewController.swift
-//  Spotify4Me
+//  Talk2Spotify4Me
 //
 //  Created by Lucas Backert on 02.11.14.
 //  Copyright (c) 2014 Lucas Backert. All rights reserved.
@@ -38,19 +38,19 @@ class TodayViewController: NSViewController, NCWidgetProviding {
     
     @IBOutlet weak var CoverHight: NSLayoutConstraint!
     @IBAction func volumeSliderAction(sender: AnyObject) {
-        let notify = NSNotification(name: "Spotify4Me", object: "volume\(sender.integerValue)")
+        let notify = NSNotification(name: "Talk2Spotify4Me", object: "volume\(sender.integerValue)")
         centerReceiver.postNotification(notify)
     }
     @IBAction func previousButton(sender: AnyObject) {
-        let notify = NSNotification(name: "Spotify4Me", object: "back")
+        let notify = NSNotification(name: "Talk2Spotify4Me", object: "back")
         centerReceiver.postNotification(notify)
     }
     @IBAction func nextButton(sender: AnyObject) {
-        let notify = NSNotification(name: "Spotify4Me", object: "skip")
+        let notify = NSNotification(name: "Talk2Spotify4Me", object: "skip")
         centerReceiver.postNotification(notify)
     }
     @IBAction func playpauseButton(sender: AnyObject) {
-        let notify = NSNotification(name: "Spotify4Me", object: "playpause")
+        let notify = NSNotification(name: "Talk2Spotify4Me", object: "playpause")
         centerReceiver.postNotification(notify)
     }
     
@@ -64,7 +64,7 @@ class TodayViewController: NSViewController, NCWidgetProviding {
         let notify = NSNotification(name: "Talk2Spotify4Me", object: "update")
         let mainapp: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("backert.Talk2Spotify") as [NSRunningApplication]
         if mainapp.isEmpty {
-            titleOutput.stringValue = "Please start 'SpotifyMain' application"
+            titleOutput.stringValue = "Please start 'Talk2Spotify' application"
         }else {
             let app: [NSRunningApplication] = NSRunningApplication.runningApplicationsWithBundleIdentifier("com.spotify.client") as [NSRunningApplication]
             if app.isEmpty {
