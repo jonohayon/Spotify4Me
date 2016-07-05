@@ -71,6 +71,15 @@ class DataManager {
                 information.updateValue(Api2Spotify.getAlbum(), forKey: smAlbum)
                 information.updateValue(Api2Spotify.getArtist(), forKey: smArtist)
                 information.updateValue(Api2Spotify.getCover(), forKey: smCover)
+                
+                // MARK - Push notification on update
+                let alert: NSUserNotification = NSUserNotification() // Notification initialization
+                alert.contentImage = NSImage(data: Api2Spotify.getCover()) // Setting the image
+                alert.title = Api2Spotify.getTitle() // Setting the title
+                alert.subtitle = "\(Api2Spotify.getAlbum()) | \(Api2Spotify.getArtist())" // Setting the subtitle
+                alert.deliveryDate = NSDate() // Setting the delivery date for now
+                NSUserNotificationCenter.defaultUserNotificationCenter().deliverNotification(alert) // Sending the notification
+                
                 let volume = Api2Spotify.getVolume()
                 if volume != "" {
                     information.updateValue(volume, forKey: smVolume)
